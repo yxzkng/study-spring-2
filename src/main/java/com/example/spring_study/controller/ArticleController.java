@@ -1,6 +1,7 @@
 package com.example.spring_study.controller;
 
 import com.example.spring_study.dto.request.ArticleRequest;
+import com.example.spring_study.dto.request.UpdateArticleRequest;
 import com.example.spring_study.dto.response.ApiResponse;
 import com.example.spring_study.dto.response.ArticleDetailResponse;
 import com.example.spring_study.dto.response.ArticleSummaryResponse;
@@ -35,5 +36,11 @@ public class ArticleController {
     public ResponseEntity<ApiResponse<List<ArticleSummaryResponse>>> getArticles() {
         List<ArticleSummaryResponse> articleDetailResponses = articleService.getArticles();
         return ResponseEntity.ok(ApiResponse.success(200,"게시글 전체 조회에 성공하였습니다.", articleDetailResponses));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<ApiResponse<ArticleDetailResponse>> updateArticle(@PathVariable Long id, @RequestBody UpdateArticleRequest request) {
+        ArticleDetailResponse articleDetailResponse = articleService.updateArticle(id, request.getTitle(), request.getContent());
+        return ResponseEntity.ok(ApiResponse.success(200, "게시물을 업데이트 하였습니다.", articleDetailResponse));
     }
 }
