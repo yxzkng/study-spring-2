@@ -43,4 +43,10 @@ public class ArticleController {
         ArticleDetailResponse articleDetailResponse = articleService.updateArticle(id, request.getTitle(), request.getContent());
         return ResponseEntity.ok(ApiResponse.success(200, "게시물을 업데이트 하였습니다.", articleDetailResponse));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ApiResponse<Void>> deleteArticle(@PathVariable Long id) {
+        articleService.deleteArticle(id);
+        return ResponseEntity.ok(ApiResponse.success(204, "게시글을 삭제하는데 성공하였습니다."));
+    }
 }
