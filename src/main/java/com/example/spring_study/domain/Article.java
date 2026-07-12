@@ -1,4 +1,4 @@
-package com.example.spring_study;
+package com.example.spring_study.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
