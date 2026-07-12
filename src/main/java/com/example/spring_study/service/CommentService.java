@@ -4,6 +4,7 @@ import com.example.spring_study.domain.Article;
 import com.example.spring_study.domain.Comment;
 import com.example.spring_study.dto.response.CommentResponse;
 import com.example.spring_study.repository.ArticleRepository;
+import com.example.spring_study.repository.CommentRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,5 +26,14 @@ public class CommentService {
         commentRepository.save(comment);
         CommentResponse response = CommentResponse.of(article.getId(), comment);
         return response;
+    }
+
+    @Transactional(readOnly = true)
+    public List<CommentResponse> getComments(Long articleId) {
+        List<Comment> comments = commentRepository.findByArticleId(articleId);
+        List<CommentResponse> responses = comments.stream()
+                .map(comment -> CommentResponse.of(articleId, comment))
+                .toList();
+        return responses;
     }
 }
